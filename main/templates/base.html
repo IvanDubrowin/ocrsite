@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>OCR App</title>
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/mdb.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/docs.css' %}" type="text/css">
+  <link rel="shortcut icon" href="{%  static 'images/favicon.ico' %}">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-light navbar-expand-sm fixed-top bg-info">
+		  <a><img src="{% static 'images/logo.png' %}" width="50" height="50"></a>
+		  <div class="collapse navbar-collapse">
+			   <ul class="navbar-nav mr-auto">
+				    <li class="nav-item">
+              <form class="form-inline mt-3 mt-md-0" action="{% url 'main:index' %}">
+    				     <button class="btn btn-dark my-2 my-sm-0" type="submit" style="  margin-right: 10px;">На главную</button>
+    			     </form>
+			    	</li>
+				    <li class="nav-item">
+              <form class="form-inline mt-3 mt-md-0" action="{% url 'main:query' page_number=1 %}">
+    				    <button class="btn btn-dark my-2 my-sm-0" type="submit" style="  margin-right: 10px;">Мои запросы</button>
+    			    </form>
+				     </li>
+             <li class="nav-item">
+               <form class="form-inline mt-3 mt-md-0" action="{% url 'main:info' %}">
+    				     <button class="btn btn-dark my-2 my-sm-0" type="submit" style="  margin-right: 10px;">О проекте</button>
+    		     	</form>
+				    </li>
+		   	</ul>
+		  </div>
+	  </nav>
+  </header>
+  <div id="main">
+    <div id="pg-main">
+      {% block content %}
+      {% endblock %}
+    </div>
+    <footer class="footer">
+    <div id="foot" class="page-footer font-small grey darken-2">
+      <div class="footer-copyright text-center py-3">
+        <a class="text-light">© 2018 Copyright:</a>
+        <a class="text-light">Дубровин Иван</a>
+        <a class="btn btn-social-icon btn-github" href="https://github.com/IvanDubrowin">
+          <span class="fa fa-github"></span>
+        </a>
+      </div>
+    </div>
+  </footer>
+  </div>
+</body>
+</html>

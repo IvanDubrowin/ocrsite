@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles%}
+<div id="index" class="container">
+  {% if none %}
+  <div id="index-card" class="card text-center">
+    <div class="card-body">
+      <a>Нет записей</a>
+    </div>
+  </div>
+  {% else %}
+  {% for item in query %}
+  <div id="index-card" class="card text-center">
+    <div class="card-header">
+    <h5>{{ item.date }}</h5>
+    </div>
+    <div class="card-body">
+      <a>{{ item.text }}</a>
+    </div>
+  </div>
+  {% endfor %}
+  <div id="pg" class="pagination justify-content-center">
+      <ul class="pagination bg-light pagination-circle pg-blue mb-0">
+          {% if query.has_previous %}
+            <li class="page-item"><a class="page-link" href="{{ query.previous_page_number }}">Назад</a></li>
+          {% else %}
+            <li class="page-item disabled"><a class="page-link" href="">Назад</a></li>
+          {% endif %}
+          {% for page in query.paginator.page_range %}
+            {% if page == query.number %}
+              <li class="page-item active"><a class="page-link" href="{{ page }}">{{ page }}</a></li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="{{ page }}">{{ page }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if query.has_next %}
+              <li class="page-item"><a class="page-link" href="{{ query.next_page_number }}">Вперед</a></li>
+          {% else %}
+            <li class="page-item disabled"><a class="page-link" href="">Вперед</a></li>
+          {% endif %}
+      </ul>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

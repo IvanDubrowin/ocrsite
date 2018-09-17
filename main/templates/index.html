@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles%}
+<div id="index" class="container">
+  <div id="index-card" class="card text-center">
+    <div class="card-header">
+    <h5>Загрузка изображения</h5>
+    </div>
+    <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      <p id="form" class="card-text">
+        {% csrf_token %}
+        {{ form }}
+      </p>
+      <input type="submit" class="btn btn-outline-success" value="Распознать"></input>
+    </form>
+    </div>
+  </div>
+  <div id="index-card" class="card text-center">
+    <div class="card-header">
+    <h5>Распознанный текст</h5>
+    </div>
+    <div class="card-body">
+      <textarea class="form-control" rows="14">{{ text }}</textarea>
+    </div>
+  </div>
+</div>
+{% endblock %}

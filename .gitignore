@@ -1,0 +1,6 @@
+
+*.pyc
+
+main/migrations/0001_initial\.py
+
+main/migrations/
