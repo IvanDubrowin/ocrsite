@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.sessions.models import Session
+from ocr_site.settings import MEDIA_ROOT
 from PIL import Image
 import pytesseract
+import cv2
+import numpy as np
 import os
 
 
@@ -21,8 +24,18 @@ class ImageUpload(models.Model):
         super(ImageUpload, self).delete(*args,**kwargs)
 
     def image_to_text(self):
-        text = pytesseract.image_to_string(Image.open(self.image), lang=self.lang)
-        return text
+        self.img = MEDIA_ROOT + '/' + str(self.image)
+        self.img = cv2.imread(self.img)
+        self.img = cv2.resize(self.img, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_CUBIC)
+        self.img = cv2.cvtColor(self.img, cv2.COLOR_BGR2GRAY)
+
+        self.kernel = np.ones((1, 1), np.uint8)
+        self.img = cv2.dilate(self.img, self.kernel, iterations=1)
+        self.img = cv2.erode(self.img, self.kernel, iterations=1)
+        self.img = cv2.threshold(cv2.GaussianBlur(self.img, (5, 5), 0), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+
+        self.text = pytesseract.image_to_string(self.img, lang=self.lang)
+        return self.text
 
 
 class UserQuery(models.Model):

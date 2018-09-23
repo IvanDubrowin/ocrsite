@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '06-h14at_)-_+40uvphy_y1!1i=l8kfk(@g@7_hh_t_bxh@2&('
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -56,11 +56,11 @@ WSGI_APPLICATION = 'ocr_site.wsgi.application'
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'postgres',
-    'USER' : 'postgres',
-    'PASSWORD' : 'l6Wthe128',
-    'HOST' : '127.0.0.1',
-    'PORT' : '5432',
+    'NAME': 'ocrdb',
+    'USER' : 'django',
+    'PASSWORD' : 'django',
+    'HOST' : 'localhost',
+    'PORT' : '',
     }
 }
 
@@ -96,6 +96,6 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = (os.path.join(BASE_DIR, 'static'),)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+STATIC_ROOT = '/home/django/ocrsite/static'
+MEDIA_ROOT = '/home/django/ocrsite/media'
 MEDIA_URL = '/images/'

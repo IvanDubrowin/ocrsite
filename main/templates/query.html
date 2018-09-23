@@ -9,6 +9,33 @@
     </div>
   </div>
   {% else %}
+  <div id="pg" class="pagination justify-content-center mb-4">
+      <ul class="pagination bg-light pagination-circle pg-blue mb-0">
+          {% if query.has_previous %}
+            <li class="page-item"><a class="page-link" href="{{ query.previous_page_number }}">Назад</a></li>
+          {% else %}
+            <li class="page-item disabled"><a class="page-link" href="">Назад</a></li>
+          {% endif %}
+          {% if query.number|add:'-4' > 1 %}
+            <li href="{{ query.number|add:'-5' }}">&hellip;</li>
+          {% endif %}
+          {% for page in query.paginator.page_range %}
+            {% if query.number == page %}
+              <li class="page-item active"><a class="page-link" href="{{ page }}">{{ page }}</a></li>
+            {% elif page > query.number|add:'-3' and page < query.number|add:'3' %}
+              <li class="page-item"><a class="page-link" href="{{ page }}">{{ page }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if query.paginator.num_pages > query.number|add:'4' %}
+            <li href="{{ query.number|add:'5' }}">&hellip;</li>
+          {% endif %}
+          {% if query.has_next %}
+              <li class="page-item"><a class="page-link" href="{{ query.next_page_number }}">Вперед</a></li>
+          {% else %}
+            <li class="page-item disabled"><a class="page-link" href="">Вперед</a></li>
+          {% endif %}
+      </ul>
+  </div>
   {% for item in query %}
   <div id="index-card" class="card text-center">
     <div class="card-header">
@@ -19,27 +46,6 @@
     </div>
   </div>
   {% endfor %}
-  <div id="pg" class="pagination justify-content-center">
-      <ul class="pagination bg-light pagination-circle pg-blue mb-0">
-          {% if query.has_previous %}
-            <li class="page-item"><a class="page-link" href="{{ query.previous_page_number }}">Назад</a></li>
-          {% else %}
-            <li class="page-item disabled"><a class="page-link" href="">Назад</a></li>
-          {% endif %}
-          {% for page in query.paginator.page_range %}
-            {% if page == query.number %}
-              <li class="page-item active"><a class="page-link" href="{{ page }}">{{ page }}</a></li>
-            {% else %}
-              <li class="page-item"><a class="page-link" href="{{ page }}">{{ page }}</a></li>
-            {% endif %}
-          {% endfor %}
-          {% if query.has_next %}
-              <li class="page-item"><a class="page-link" href="{{ query.next_page_number }}">Вперед</a></li>
-          {% else %}
-            <li class="page-item disabled"><a class="page-link" href="">Вперед</a></li>
-          {% endif %}
-      </ul>
-  </div>
   {% endif %}
 </div>
 {% endblock %}

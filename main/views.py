@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, render_to_response
-from django.views.generic import View
+from django.http import JsonResponse
+from django.views.generic import View, CreateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.sessions.models import Session
 from .forms import UploadForm
@@ -19,24 +20,26 @@ class IndexView(View):
 
     def post(self, request):
         form = UploadForm(self.request.POST, self.request.FILES)
+        response_data = {}
         if form.is_valid():
             instance = form.save(commit=False)
             instance.save()
             text = instance.image_to_text()
-            args = {"text": text,
-                    "form": form}
+
             save_text = UserQuery(
-                    session = Session.objects.get(session_key=request.COOKIES.get('sessionid')),
-                    text = text
-                    )
+                session = Session.objects.get(session_key=request.COOKIES.get('sessionid')),
+                text = text
+                )
+            instance.delete()
             if len(save_text.text) > 0:
                 save_text.save()
+                return JsonResponse({'text': save_text.text})
             else:
-                args = {"text": 'Не удалось разпознать изображение',
-                        "form": form}
-            instance.delete()
-            return render(request, self.template_name, args)
-        return render(request, self.template_name, {"form": form})
+                return JsonResponse({'text': 'Не удалось распознать изображение'})
+        else:
+            return JsonResponse({'text': 'Файл поврежден или не является изображением' })
+
+
 
 
 class QueryView(View):
@@ -59,12 +62,21 @@ class QueryView(View):
         return render(request, self.template_name, args)
 
 
+
+
 class InfoView(View):
 
     template_name = 'info.html'
 
     def get(self, request):
         return render(request, self.template_name)
+
+
+
+
+
+
+
 
 
 def handler404(request):

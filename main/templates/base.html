@@ -18,23 +18,20 @@
   <header>
     <nav class="navbar navbar-light navbar-expand-sm fixed-top bg-info">
 		  <a><img src="{% static 'images/logo.png' %}" width="50" height="50"></a>
-		  <div class="collapse navbar-collapse">
-			   <ul class="navbar-nav mr-auto">
-				    <li class="nav-item">
-              <form class="form-inline mt-3 mt-md-0" action="{% url 'main:index' %}">
-    				     <button class="btn btn-dark my-2 my-sm-0" type="submit" style="  margin-right: 10px;">На главную</button>
-    			     </form>
-			    	</li>
-				    <li class="nav-item">
-              <form class="form-inline mt-3 mt-md-0" action="{% url 'main:query' page_number=1 %}">
-    				    <button class="btn btn-dark my-2 my-sm-0" type="submit" style="  margin-right: 10px;">Мои запросы</button>
-    			    </form>
-				     </li>
-             <li class="nav-item">
-               <form class="form-inline mt-3 mt-md-0" action="{% url 'main:info' %}">
-    				     <button class="btn btn-dark my-2 my-sm-0" type="submit" style="  margin-right: 10px;">О проекте</button>
-    		     	</form>
-				    </li>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
+    	   <span class="navbar-toggler-icon"></span>
+  	   </button>
+		  <div class="collapse navbar-collapse" id="navbar1">
+			   <ul class="navbar-nav navbar-right">
+           <li class="nav-item active mr-2 ml-2 mb-1 mt-1">
+             <a class="nav-link text-center" href="{% url 'main:index' %}">На главную</a>
+           </li>
+           <li class="nav-item active mr-2 ml-2 mb-1 mt-1">
+             <a class="nav-link text-center" href="{% url 'main:query' page_number=1 %}">Мои запросы</a>
+            </li>
+            <li class="nav-item active mr-2 ml-2 mb-1 mt-1">
+              <a class="nav-link text-center" href="{% url 'main:info' %}">О проекте</a>
+            </li>
 		   	</ul>
 		  </div>
 	  </nav>
@@ -56,5 +53,10 @@
     </div>
   </footer>
   </div>
+  <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/jquery.cookie.js' %}"></script>
+  <script src="{% static 'js/validator.min.js' %}"></script>
 </body>
 </html>
